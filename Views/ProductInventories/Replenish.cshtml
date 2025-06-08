@@ -1,0 +1,13 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Replenish";
+}
+
+<form asp-action="Replenish">
+    <div class="form-group">
+        <label>Quantity to order</label>
+        <input name="quantity" type="number" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Replenish</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
