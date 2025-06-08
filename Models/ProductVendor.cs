@@ -1,21 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksCommons.Models;
 
 /// <summary>
 /// Cross-reference table mapping vendors with the products they supply.
 /// </summary>
+[PrimaryKey("ProductId", "BusinessEntityId")]
+[Table("ProductVendor", Schema = "Purchasing")]
+[Index("BusinessEntityId", Name = "IX_ProductVendor_BusinessEntityID")]
+[Index("UnitMeasureCode", Name = "IX_ProductVendor_UnitMeasureCode")]
 public partial class ProductVendor
 {
     /// <summary>
     /// Primary key. Foreign key to Product.ProductID.
     /// </summary>
+    [Key]
+    [Column("ProductID")]
     public int ProductId { get; set; }
 
     /// <summary>
     /// Primary key. Foreign key to Vendor.BusinessEntityID.
     /// </summary>
+    [Key]
+    [Column("BusinessEntityID")]
     public int BusinessEntityId { get; set; }
 
     /// <summary>
@@ -26,16 +37,19 @@ public partial class ProductVendor
     /// <summary>
     /// The vendor&apos;s usual selling price.
     /// </summary>
+    [Column(TypeName = "money")]
     public decimal StandardPrice { get; set; }
 
     /// <summary>
     /// The selling price when last purchased.
     /// </summary>
+    [Column(TypeName = "money")]
     public decimal? LastReceiptCost { get; set; }
 
     /// <summary>
     /// Date the product was last received by the vendor.
     /// </summary>
+    [Column(TypeName = "datetime")]
     public DateTime? LastReceiptDate { get; set; }
 
     /// <summary>
@@ -56,16 +70,24 @@ public partial class ProductVendor
     /// <summary>
     /// The product&apos;s unit of measure.
     /// </summary>
+    [StringLength(3)]
     public string UnitMeasureCode { get; set; } = null!;
 
     /// <summary>
     /// Date and time the record was last updated.
     /// </summary>
+    [Column(TypeName = "datetime")]
     public DateTime ModifiedDate { get; set; }
 
+    [ForeignKey("BusinessEntityId")]
+    [InverseProperty("ProductVendors")]
     public virtual Vendor BusinessEntity { get; set; } = null!;
 
+    [ForeignKey("ProductId")]
+    [InverseProperty("ProductVendors")]
     public virtual Product Product { get; set; } = null!;
 
+    [ForeignKey("UnitMeasureCode")]
+    [InverseProperty("ProductVendors")]
     public virtual UnitMeasure UnitMeasureCodeNavigation { get; set; } = null!;
 }

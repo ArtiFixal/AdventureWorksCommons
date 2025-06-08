@@ -1,26 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksCommons.Models;
 
 /// <summary>
 /// Employee information such as salary, department, and title.
 /// </summary>
+[Table("Employee", Schema = "HumanResources")]
+[Index("LoginId", Name = "AK_Employee_LoginID", IsUnique = true)]
+[Index("NationalIdnumber", Name = "AK_Employee_NationalIDNumber", IsUnique = true)]
+[Index("Rowguid", Name = "AK_Employee_rowguid", IsUnique = true)]
 public partial class Employee
 {
     /// <summary>
     /// Primary key for Employee records.  Foreign key to BusinessEntity.BusinessEntityID.
     /// </summary>
+    [Key]
+    [Column("BusinessEntityID")]
     public int BusinessEntityId { get; set; }
 
     /// <summary>
     /// Unique national identification number such as a social security number.
     /// </summary>
+    [Column("NationalIDNumber")]
+    [StringLength(15)]
     public string NationalIdnumber { get; set; } = null!;
 
     /// <summary>
     /// Network login.
     /// </summary>
+    [Column("LoginID")]
+    [StringLength(256)]
     public string LoginId { get; set; } = null!;
 
     /// <summary>
@@ -31,6 +44,7 @@ public partial class Employee
     /// <summary>
     /// Work title such as Buyer or Sales Representative.
     /// </summary>
+    [StringLength(50)]
     public string JobTitle { get; set; } = null!;
 
     /// <summary>
@@ -41,11 +55,13 @@ public partial class Employee
     /// <summary>
     /// M = Married, S = Single
     /// </summary>
+    [StringLength(1)]
     public string MaritalStatus { get; set; } = null!;
 
     /// <summary>
     /// M = Male, F = Female
     /// </summary>
+    [StringLength(1)]
     public string Gender { get; set; } = null!;
 
     /// <summary>
@@ -76,22 +92,31 @@ public partial class Employee
     /// <summary>
     /// ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.
     /// </summary>
+    [Column("rowguid")]
     public Guid Rowguid { get; set; }
 
     /// <summary>
     /// Date and time the record was last updated.
     /// </summary>
+    [Column(TypeName = "datetime")]
     public DateTime ModifiedDate { get; set; }
 
+    [ForeignKey("BusinessEntityId")]
+    [InverseProperty("Employee")]
     public virtual Person BusinessEntity { get; set; } = null!;
 
+    [InverseProperty("BusinessEntity")]
     public virtual ICollection<EmployeeDepartmentHistory> EmployeeDepartmentHistories { get; set; } = new List<EmployeeDepartmentHistory>();
 
+    [InverseProperty("BusinessEntity")]
     public virtual ICollection<EmployeePayHistory> EmployeePayHistories { get; set; } = new List<EmployeePayHistory>();
 
+    [InverseProperty("BusinessEntity")]
     public virtual ICollection<JobCandidate> JobCandidates { get; set; } = new List<JobCandidate>();
 
+    [InverseProperty("Employee")]
     public virtual ICollection<PurchaseOrderHeader> PurchaseOrderHeaders { get; set; } = new List<PurchaseOrderHeader>();
 
+    [InverseProperty("BusinessEntity")]
     public virtual SalesPerson? SalesPerson { get; set; }
 }
