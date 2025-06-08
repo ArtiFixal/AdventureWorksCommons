@@ -1,0 +1,63 @@
+﻿@model AdventureWorksCommons.Models.Invoice
+
+@{
+    ViewData["Title"] = "Invoice Details";
+}
+
+<h1>Invoice Details</h1>
+
+<div>
+    <h2>Invoice ID: @Model.InvoiceId</h2>
+    <dl class="row">
+        <dt class="col-sm-2">Sales Order ID</dt>
+        <dd class="col-sm-10">@Model.SalesOrderId</dd>
+
+        <dt class="col-sm-2">Customer ID</dt>
+        <dd class="col-sm-10">@Model.CustomerId</dd>
+
+        <dt class="col-sm-2">Invoice Date</dt>
+        <dd class="col-sm-10">@Model.InvoiceDate?.ToString("yyyy-MM-dd HH:mm")</dd>
+
+        <dt class="col-sm-2">Total Amount</dt>
+        <dd class="col-sm-10">@Model.TotalAmount</dd>
+
+        <dt class="col-sm-2">Created At</dt>
+        <dd class="col-sm-10">@Model.CreatedAt?.ToString("yyyy-MM-dd HH:mm")</dd>
+    </dl>
+</div>
+
+<h3>Invoice Lines</h3>
+
+@if (Model.InvoiceLines != null && Model.InvoiceLines.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Line Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.InvoiceLines)
+            {
+                <tr>
+                    <td>@line.ProductId</td>
+                    <td>@line.Quantity</td>
+                    <td>@line.UnitPrice</td>
+                    <td>@line.LineTotal</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No invoice lines available.</p>
+}
+
+<p>
+    <a asp-controller="Sales" asp-action="Index" class="btn btn-secondary">Back to Orders List</a>
+</p>
+
