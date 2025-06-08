@@ -1,0 +1,155 @@
+﻿@model AdventureWorksCommons.Models.NewProductStaging
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<p class="text-muted"><strong>*</strong> Pola wymagane</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">* @Html.DisplayNameFor(m => m.Name)</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductNumber" class="control-label">* @Html.DisplayNameFor(m => m.ProductNumber)</label>
+                <input asp-for="ProductNumber" class="form-control" />
+                <span asp-validation-for="ProductNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <input asp-for="MakeFlag" class="form-check-input" />
+                <label asp-for="MakeFlag" class="form-check-label">@Html.DisplayNameFor(m => m.MakeFlag)</label>
+            </div>
+
+            <div class="form-group form-check">
+                <input asp-for="FinishedGoodsFlag" class="form-check-input" />
+                <label asp-for="FinishedGoodsFlag" class="form-check-label">@Html.DisplayNameFor(m => m.FinishedGoodsFlag)</label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Color" class="control-label">@Html.DisplayNameFor(m => m.Color)</label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SafetyStockLevel" class="control-label">* @Html.DisplayNameFor(m => m.SafetyStockLevel)</label>
+                <input asp-for="SafetyStockLevel" class="form-control" />
+                <span asp-validation-for="SafetyStockLevel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReorderPoint" class="control-label">* @Html.DisplayNameFor(m => m.ReorderPoint)</label>
+                <input asp-for="ReorderPoint" class="form-control" />
+                <span asp-validation-for="ReorderPoint" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StandardCost" class="control-label">* @Html.DisplayNameFor(m => m.StandardCost)</label>
+                <input asp-for="StandardCost" class="form-control" />
+                <span asp-validation-for="StandardCost" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ListPrice" class="control-label">* @Html.DisplayNameFor(m => m.ListPrice)</label>
+                <input asp-for="ListPrice" class="form-control" />
+                <span asp-validation-for="ListPrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Size" class="control-label">@Html.DisplayNameFor(m => m.Size)</label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SizeUnitMeasureCode" class="control-label">@Html.DisplayNameFor(m => m.SizeUnitMeasureCode)</label>
+                @Html.DropDownListFor(model => model.SizeUnitMeasureCode, (SelectList)ViewData["SizeUnitMeasureCode"], "Size Unit Measure", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label asp-for="WeightUnitMeasureCode" class="control-label">@Html.DisplayNameFor(m => m.WeightUnitMeasureCode)</label>
+                @Html.DropDownListFor(model => model.WeightUnitMeasureCode, (SelectList)ViewData["WeightUnitMeasureCode"], "Weight Unit Measure", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label">@Html.DisplayNameFor(m => m.Weight)</label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DaysToManufacture" class="control-label">* @Html.DisplayNameFor(m => m.DaysToManufacture)</label>
+                <input asp-for="DaysToManufacture" class="form-control" />
+                <span asp-validation-for="DaysToManufacture" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductLine" class="control-label">@Html.DisplayNameFor(m => m.ProductLine)</label>
+                <input asp-for="ProductLine" class="form-control" />
+                <span asp-validation-for="ProductLine" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Class" class="control-label">@Html.DisplayNameFor(m => m.Class)</label>
+                <input asp-for="Class" class="form-control" />
+                <span asp-validation-for="Class" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Style" class="control-label">@Html.DisplayNameFor(m => m.Style)</label>
+                <input asp-for="Style" class="form-control" />
+                <span asp-validation-for="Style" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductSubcategoryId" class="control-label">@Html.DisplayNameFor(m => m.ProductSubcategoryId)</label>
+                @Html.DropDownListFor(model => model.ProductSubcategoryId, (SelectList)ViewData["ProductSubcategoryId"], "Product Subcategory", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductModelId" class="control-label">@Html.DisplayNameFor(m => m.ProductModelId)</label>
+                @Html.DropDownListFor(model => model.ProductModelId, (SelectList)ViewData["ProductModelId"], "Product Model", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SellStartDate" class="control-label">* @Html.DisplayNameFor(m => m.SellStartDate)</label>
+                <input asp-for="SellStartDate" class="form-control" />
+                <span asp-validation-for="SellStartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SellEndDate" class="control-label">@Html.DisplayNameFor(m => m.SellEndDate)</label>
+                <input asp-for="SellEndDate" class="form-control" />
+                <span asp-validation-for="SellEndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DiscontinuedDate" class="control-label">@Html.DisplayNameFor(m => m.DiscontinuedDate)</label>
+                <input asp-for="DiscontinuedDate" class="form-control" />
+                <span asp-validation-for="DiscontinuedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
