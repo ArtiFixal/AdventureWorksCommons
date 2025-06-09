@@ -199,8 +199,9 @@ public partial class AdventureWorksContext : DbContext
 
     public virtual DbSet<WorkOrderRouting> WorkOrderRoutings { get; set; }
 
+    public DbSet<EmployeeBenefit> EmployeeBenefits { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=localhost;Database=AdventureWorks;Trusted_Connection=True;Encrypt=False;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1906,6 +1907,37 @@ public partial class AdventureWorksContext : DbContext
             entity.HasOne(d => d.Location).WithMany(p => p.WorkOrderRoutings).OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.WorkOrder).WithMany(p => p.WorkOrderRoutings).OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<BenefitProduct>().HasNoKey();
+
+        modelBuilder.Entity<EmployeeBenefit>(entity =>
+        {
+            entity.ToTable("EmployeeBenefit", "ebs");
+
+            entity.HasKey(e => e.BenefitID);
+
+            entity.Property(e => e.AssignedDate)
+                .HasDefaultValueSql("GETDATE()")
+                .IsRequired();
+
+            entity.Property(e => e.Redeemed)
+                .HasDefaultValue(false)
+                .IsRequired();
+
+            entity.Property(e => e.DiscountPercent)
+                .HasColumnType("decimal(5,2)")
+                .IsRequired();
+
+            entity.HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.Product)
+                .WithMany()
+                .HasForeignKey(e => e.ProductID)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         OnModelCreatingPartial(modelBuilder);

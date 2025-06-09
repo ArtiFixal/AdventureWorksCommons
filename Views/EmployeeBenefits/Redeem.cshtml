@@ -1,0 +1,20 @@
+﻿@model AdventureWorksCommons.Models.RedeemBenefitModel
+@{
+    ViewData["Title"] = "Redeem Benefit";
+    var benefitsList = ViewData["Benefits"] as List<SelectListItem>;
+    var employeeID = ViewData["SelectedEmployeeID"];
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Redeem" method="post">
+    <input type="hidden" asp-for="EmployeeID" value="@employeeID" class="form-control" />
+
+    <div class="form-group">
+        <label for="BenefitID">Benefit:</label>
+        <select asp-for="BenefitID" asp-items="benefitsList" class="form-select"></select>
+        <span asp-validation-for="BenefitID" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Redeem</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

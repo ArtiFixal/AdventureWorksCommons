@@ -1,0 +1,31 @@
+﻿@model AdventureWorksCommons.Models.AssignBenefitModel
+@{
+    ViewBag.Title = "Assign Benefit";
+    var employeeList = ViewData["Employees"] as List<SelectListItem>;
+    var productList = ViewData["Products"] as List<SelectListItem>;
+}
+
+<h2>Assign Benefit</h2>
+
+<form asp-action="Assign" method="post" class="form">
+    <div class="form-group mb-3">
+        <label asp-for="EmployeeID" class="form-label">Employee</label>
+        <select asp-for="EmployeeID" asp-items="employeeList" class="form-select"></select>
+        <span asp-validation-for="EmployeeID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ProductID" class="form-label">Product</label>
+        <select asp-for="ProductID" asp-items="productList" class="form-select"></select>
+        <span asp-validation-for="ProductID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="DiscountPercent" class="form-label">Discount (%)</label>
+        <input asp-for="DiscountPercent" class="form-control" type="number" step="0.01" min="1" max="100" />
+        <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Assign Benefit</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>
